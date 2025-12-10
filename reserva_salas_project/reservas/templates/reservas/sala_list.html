@@ -1,0 +1,39 @@
+{% extends 'base.html' %} 
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🗓️ Salas de Reunião Disponíveis</h2>
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger">Sair</a>
+    </div>
+
+    <div class="row">
+        {% for sala in salas %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ sala.nome }}</h5>
+                    <p class="card-text text-muted">
+                        Capacidade: **{{ sala.capacidade }}** pessoas
+                    </p>
+                    <p class="card-text small">
+                        **Recursos:** {% for recurso in sala.recursos.all %}
+                            <span class="badge bg-secondary">{{ recurso.nome }}</span>
+                        {% empty %}
+                            Nenhum recurso cadastrado.
+                        {% endfor %}
+                    </p>
+                    <hr>
+                    <a href="#" class="btn btn-primary btn-sm">Visualizar Disponibilidade</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning">Nenhuma sala cadastrada no sistema. Contate o Administrador.</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
